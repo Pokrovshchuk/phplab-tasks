@@ -10,9 +10,22 @@
  * @return string
  * @throws InvalidArgumentException
  */
-function getMinuteQuarter(int $minute)
-{
+function getMinuteQuarter(int $minute) {
+    if ($minute >= 0 && $minute <= 15) {
+        return 'first';
+    } elseif ($minute > 15 && $minute <= 30) {
+        return 'second';
+    } elseif ($minute > 30 && $minute <= 45) {
+        return 'third';
+    } elseif ($minute > 30 && $minute <= 45) {
+        return 'third';
+    } elseif ($minute > 45 && $minute <= 60) {
+        return 'fourth';
+    } else {
+        throw new InvalidArgumentException('Invalid argument');
+    }
 }
+
 
 /**
  * The $year variable contains a year (i.e. 1995 or 2020 etc).
@@ -25,8 +38,11 @@ function getMinuteQuarter(int $minute)
  * @return boolean
  * @throws InvalidArgumentException
  */
-function isLeapYear(int $year)
-{
+function isLeapYear(int $year) {
+    if ($year < 1900) {
+        throw new InvalidArgumentException('Invalid argument');
+    }
+    return ((!($year % 4) && ($year % 100)) || (!($year % 400))) ? true : false;
 }
 
 /**
@@ -40,6 +56,15 @@ function isLeapYear(int $year)
  * @return boolean
  * @throws InvalidArgumentException
  */
-function isSumEqual(string $input)
-{
+function isSumEqual(string $input) {
+    if (strlen($input) !== 6) {
+        throw new InvalidArgumentException('Invalid argument');
+    }
+
+    $arr = array_map('intval', str_split($input));
+    $new_arr = array_chunk($arr, 3);
+
+    if (array_sum($new_arr[0]) === array_sum($new_arr[1])) {
+        return true;
+    }
 }
